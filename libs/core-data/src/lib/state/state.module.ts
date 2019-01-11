@@ -13,10 +13,10 @@ import { CustomersEffects } from './customers/customers.effects';
     CommonModule,
     NxModule.forRoot(),
     StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument({ maxAge: 10 }),
-    EffectsModule.forRoot([
-      CustomersEffects
-    ]),
+     StoreDevtoolsModule.instrument({ maxAge: 10 }),
+     EffectsModule.forRoot([
+       CustomersEffects
+     ]),
   ],
   declarations: []
 })
