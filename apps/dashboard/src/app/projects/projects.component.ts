@@ -1,7 +1,17 @@
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState } from '@workshop/core-data';
+import {
+  Customer,
+  Project,
+  ProjectsService,
+  NotificationsService,
+  CustomersService,
+  ProjectsState,
+  AddProject,
+  UpdateProject,
+  DeleteProject
+} from "@workshop/core-data";
 import { map } from "rxjs/operators";
 
 const emptyProject: Project = {
@@ -68,7 +78,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.store.dispatch({type: 'create', payload: project});
+    this.store.dispatch(new AddProject(project));
     
     //This will be removed 
     this.ns.emit('Project created!');
@@ -82,7 +92,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   updateProject(project) {
-    this.store.dispatch({type: 'update', payload: project});
+    this.store.dispatch(new UpdateProject(project));
 
     this.ns.emit('Project updated!');
     this.resetCurrentProject();
@@ -95,7 +105,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(project) {
-    this.store.dispatch({type: 'delete', payload: project});
+    this.store.dispatch(new DeleteProject(project));
 
     this.ns.emit('Project deleted!');
     this.resetCurrentProject();
