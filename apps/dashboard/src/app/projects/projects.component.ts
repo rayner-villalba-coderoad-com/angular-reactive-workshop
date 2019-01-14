@@ -12,7 +12,8 @@ import {
   UpdateProject,
   DeleteProject,
   LoadProjects,
-  initialProjects
+  initialProjects,
+  selectAllProjects
 } from "@workshop/core-data";
 import { map } from "rxjs/operators";
 
@@ -41,9 +42,7 @@ export class ProjectsComponent implements OnInit {
     private store: Store<ProjectsState>,
     private ns: NotificationsService) { 
       this.projects$ = store.pipe(
-        select('projects'),
-        map(data => data.entities),
-        map(data => Object.keys(data).map(key => data[key]))
+        select(selectAllProjects)
       )
     }
 

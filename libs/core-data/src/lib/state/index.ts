@@ -16,6 +16,24 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 
 // -------------------------------------------------------------------
+// PROJECTS SELECTORS
+// -------------------------------------------------------------------
+export const selectProjectsState = createFeatureSelector<fromProjects.ProjectsState>('projects');
+export const selectProjectIds = createSelector(
+  selectProjectsState,
+  fromProjects.selectProjectIds
+);
+export const selectProjectEntities = createSelector(
+  selectProjectsState,
+  fromProjects.selectProjectEntities
+);
+export const selectAllProjects = createSelector(
+  selectProjectsState,
+  fromProjects.selectAllProjects
+);
+
+
+// -------------------------------------------------------------------
 // CUSTOMERS SELECTORS
 // -------------------------------------------------------------------
 export const selectCustomersState = createFeatureSelector<fromCustomers.CustomersState>('customers');
