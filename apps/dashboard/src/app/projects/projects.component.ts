@@ -70,7 +70,7 @@ export class ProjectsComponent implements OnInit {
 
   getProjects() {
     //this.projects$ = this.projectsService.all();
-    this.store.dispatch(new LoadProjects(initialProjects));
+    this.store.dispatch(new LoadProjects());
   }
 
   saveProject(project) {
@@ -121,5 +121,9 @@ export class ProjectsComponent implements OnInit {
     //     this.resetCurrentProject();
     //   });
   }
+}
+
+function newFunction(): LoadProjects {
+    return new LoadProjects();
 }
 

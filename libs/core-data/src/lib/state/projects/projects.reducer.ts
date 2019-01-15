@@ -56,33 +56,22 @@ export function projectsReducers(
   switch(action.type) {
     case ProjectsActionTypes.ProjectSelected:
       return Object.assign({}, state, { selectedProjectId: action.payload });
-      // return {
-      //   selectedProjectId: action.payload,
-      //   projects: state.projects
-      // }
-    case ProjectsActionTypes.LoadProjects:
-      return adapter.addMany(action.payload, state);
 
-    case ProjectsActionTypes.AddProject: 
+    case ProjectsActionTypes.ProjectsLoaded:
+      console.log('PAYLOAD', action.payload)
+      return adapter.addAll(action.payload, state);
+
+    case ProjectsActionTypes.ProjectAdded: 
      //delegate to a stand alone function 
      //Because it is Testable!
      return adapter.addOne(action.payload, state);
-      // return {
-      //   selectedProjectId: state.selectedProjectId,
-      //   projects: createProject(state.projects, action.payload)
-      // }
+
     case ProjectsActionTypes.UpdateProject: 
       return adapter.updateOne(action.payload, state);
-      // return {
-      //   selectedProjectId: state.selectedProjectId,
-      //   projects: updateProject(state.projects, action.payload)
-      // }   
+  
     case ProjectsActionTypes.DeleteProject:
       return adapter.removeOne(action.payload, state);
-      // return {
-      //   selectedProjectId: state.selectedProjectId,
-      //   projects: deleteProject(state.projects, action.payload)
-      // }  
+
     default: 
       return state;
   }
