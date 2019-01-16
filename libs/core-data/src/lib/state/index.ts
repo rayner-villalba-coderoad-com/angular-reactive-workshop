@@ -32,6 +32,27 @@ export const selectAllProjects = createSelector(
   fromProjects.selectAllProjects
 );
 
+export const selectCurrentProjectId = createSelector(
+  selectProjectsState,
+  fromProjects.getSelectedProjectId
+);
+
+const emptyProject: Project = {
+  id: null,
+  title: '',
+  details: '',
+  percentComplete: 0,
+  approved: false,
+  constomerId: null
+}
+
+export const selectCurrentProject = createSelector(
+  selectProjectEntities,
+  selectCurrentProjectId,
+  (projectEntities, projectId) => {
+    return projectId ? projectEntities[projectId] : emptyProject;
+  }  
+);
 
 // -------------------------------------------------------------------
 // CUSTOMERS SELECTORS

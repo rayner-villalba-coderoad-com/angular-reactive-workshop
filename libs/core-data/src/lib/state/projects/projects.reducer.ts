@@ -58,7 +58,6 @@ export function projectsReducers(
       return Object.assign({}, state, { selectedProjectId: action.payload });
 
     case ProjectsActionTypes.ProjectsLoaded:
-      console.log('PAYLOAD', action.payload)
       return adapter.addAll(action.payload, state);
 
     case ProjectsActionTypes.ProjectAdded: 

@@ -13,7 +13,9 @@ import {
   DeleteProject,
   LoadProjects,
   initialProjects,
-  selectAllProjects
+  selectAllProjects,
+  selectCurrentProject,
+  SelectProject
 } from "@workshop/core-data";
 import { map } from "rxjs/operators";
 
@@ -34,16 +36,16 @@ const emptyProject: Project = {
 export class ProjectsComponent implements OnInit {
   projects$: Observable<Project[]>;
   customers$: Observable<Customer[]>;
-  currentProject: Project;
+  currentProject$: Observable<Project>;
 
   constructor(
-    private projectsService: ProjectsService,
     private customerService: CustomersService,
     private store: Store<ProjectsState>,
     private ns: NotificationsService) { 
       this.projects$ = store.pipe(
         select(selectAllProjects)
       )
+      this.currentProject$ = store.pipe(select(selectCurrentProject));
     }
 
   ngOnInit() {
@@ -53,11 +55,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   resetCurrentProject() {
-    this.currentProject = emptyProject;
+    this.store.dispatch(new SelectProject(null));
   }
 
   selectProject(project) {
-    this.currentProject = project;
+    this.store.dispatch(new SelectProject(project.id));
   }
 
   cancel(project) {

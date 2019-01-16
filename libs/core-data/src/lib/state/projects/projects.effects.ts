@@ -20,14 +20,16 @@ export class ProjectsEffects {
     run: (action: LoadProjects, state: ProjectsState) => {
       return this.projectsService.all().pipe(map((res: Project[]) => new ProjectsLoaded(res)))
     },
-    onError: () => {}
+    onError: (action: LoadProjects, error) => {
+
+    }
   })
 
   @Effect() addProjects$ = this.dataPersistence.pessimisticUpdate(ProjectsActionTypes.AddProject, {
     run: (action: AddProject, state: ProjectsState) => {
       return this.projectsService.create(action.payload).pipe(map((res: Project) => new ProjectAdded(res)))
     },
-    onError: () => {}
+    onError: (action: AddProject, error) => {}
   })
 
   constructor(
