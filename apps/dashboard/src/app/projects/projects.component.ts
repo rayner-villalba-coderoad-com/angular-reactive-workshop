@@ -3,19 +3,10 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {
   Customer,
-  Project,
-  ProjectsService,
-  NotificationsService,
   CustomersService,
-  ProjectsState,
-  AddProject,
-  UpdateProject,
-  DeleteProject,
-  LoadProjects,
-  initialProjects,
-  selectAllProjects,
-  selectCurrentProject,
-  SelectProject
+  NotificationsService,
+  Project,
+  ProjectsFacade
 } from "@workshop/core-data";
 import { map } from "rxjs/operators";
 
@@ -40,12 +31,10 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private customerService: CustomersService,
-    private store: Store<ProjectsState>,
+    private facade: ProjectsFacade,
     private ns: NotificationsService) { 
-      this.projects$ = store.pipe(
-        select(selectAllProjects)
-      )
-      this.currentProject$ = store.pipe(select(selectCurrentProject));
+      this.projects$ = facade.projects$;
+      this.currentProject$ = facade.currentProject$;
     }
 
   ngOnInit() {
@@ -55,11 +44,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   resetCurrentProject() {
-    this.store.dispatch(new SelectProject(null));
+    this.facade.selectProject(null);
   }
 
   selectProject(project) {
-    this.store.dispatch(new SelectProject(project.id));
+    this.facade.selectProject(project.id);
   }
 
   cancel(project) {
@@ -71,8 +60,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   getProjects() {
-    //this.projects$ = this.projectsService.all();
-    this.store.dispatch(new LoadProjects());
+    this.facade.getProjects();
   }
 
   saveProject(project) {
@@ -84,34 +72,22 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.store.dispatch(new AddProject(project));
+    this.facade.createProject(project);
     
     //This will be removed 
     this.ns.emit('Project created!');
     this.resetCurrentProject();
-    // this.projectsService.create(project)
-    //   .subscribe(response => {
-    //     this.ns.emit('Project created!');
-    //     this.getProjects();
-    //     this.resetCurrentProject();
-    //   });
   }
 
   updateProject(project) {
-    this.store.dispatch(new UpdateProject(project));
+    this.facade.updateProject(project);
 
     this.ns.emit('Project updated!');
     this.resetCurrentProject();
-    // this.projectsService.update(project)
-    //   .subscribe(response => {
-    //     this.ns.emit('Project saved!');
-    //     this.getProjects();
-    //     this.resetCurrentProject();
-    //   });
   }
 
   deleteProject(project) {
-    this.store.dispatch(new DeleteProject(project));
+    this.facade.deleteProject(project);
 
     this.ns.emit('Project deleted!');
     this.resetCurrentProject();
@@ -124,8 +100,3 @@ export class ProjectsComponent implements OnInit {
     //   });
   }
 }
-
-function newFunction(): LoadProjects {
-    return new LoadProjects();
-}
-

@@ -64,4 +64,15 @@ export const selectAllCustomers = createSelector(
   fromCustomers.selectAllCustomers
 );
 
-
+export const selectCustomersProjects = createSelector(
+  selectAllCustomers,
+  selectAllProjects,
+  (customers, projects) => {
+    return customers.map(customer => {
+      return Object.assign({}, {
+        ...customer,
+        projects: projects.filter(project => project.customerId === customer.id)
+      })
+    })
+  }
+)
