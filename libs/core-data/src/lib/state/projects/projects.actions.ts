@@ -43,13 +43,12 @@ export class DeleteProject implements Action {
 
 export class LoadProjects implements Action {
   readonly type = ProjectsActionTypes.LoadProjects;
-  constructor(public payload: Project[]) {}
 }
 
 export type ProjectsActions = SelectProject 
+| LoadProjects
 | AddProject
 | ProjectAdded
-| LoadProjects
 | ProjectsLoaded
 | UpdateProject
 | DeleteProject;

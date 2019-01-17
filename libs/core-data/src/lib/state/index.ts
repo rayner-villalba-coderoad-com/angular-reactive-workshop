@@ -2,6 +2,7 @@ import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/s
 
 import * as fromCustomers from './customers/customers.reducer';
 import * as fromProjects from './projects/projects.reducer';
+import { Project } from "libs/core-data/src";
 
 //Update the shape of the entire application state
 export interface AppState {
@@ -43,7 +44,7 @@ const emptyProject: Project = {
   details: '',
   percentComplete: 0,
   approved: false,
-  constomerId: null
+  customerId: null,
 }
 
 export const selectCurrentProject = createSelector(

@@ -11,7 +11,7 @@ import {
   UpdateProject,
   DeleteProject,
   SelectProject
-} from "libs/core-data/src";
+} from "./projects.actions";
 
 
 @Injectable({
